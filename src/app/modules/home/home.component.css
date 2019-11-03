@@ -1,0 +1,75 @@
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+    margin-bottom: 4rem;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+    bottom: 3rem;
+    z-index: 10;
+}
+    
+    /* Declare heights because of positioning of img element */
+.carousel-item {
+    height: 32rem;
+}
+.caption div {
+    box-shadow: 0 0 5px #C8C8C8;
+    transition: all 0.3s ease 0s;
+}
+.img-circle {
+    border-radius: 50%;
+}
+      .img-circle {
+        border-radius: 0;
+      }
+      
+      .ratio {
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+        width: 100%;
+      }
+      .img-circle {
+        border-radius: 50%;
+      }
+      .img-responsive {
+        display: block;
+        height: auto;
+        max-width: 100%;
+      }
+      
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .container .marketing img{
+          margin-left: 0 auto;
+          padding-left: 0 auto;
+      }
+
+.container2{
+    text-align: center;
+}
+
+.container2:hover{
+    box-shadow: 11px 11px 21px 0px rgba(0, 0.30, 0, 0.37);
+    border-radius: 5px;
+}
+
+.featurette:hover{
+    box-shadow: 11px 11px 21px 0px rgba(0, 0.30, 0, 0.37);
+    border-radius: 5px;
+}
