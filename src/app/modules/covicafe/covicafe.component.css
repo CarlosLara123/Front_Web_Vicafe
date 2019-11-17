@@ -1,0 +1,51 @@
+#parallax-1 {
+    /* The image used */
+    background-image: url("../../../assets/covicafe/imagen_1.jpg");
+  
+    /* Set a specific height */
+    height: 500px;
+    width: 100%;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#parallax-2 {
+    /* The image used */
+    background-image: url("../../../assets/covicafe/imagen_4.jpg");
+  
+    /* Set a specific height */
+    height: 500px;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#parallax-3 {
+    /* The image used */
+    background-image: url("../../../assets/covicafe/imagen_5.jpg");
+  
+    /* Set a specific height */
+    height: 500px;
+    width: 100%;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1, h2{
+    font-family: 'Kaushan Script', cursive;
+}
+
+.sub{
+    font-family: 'Bad Script', cursive;
+}
