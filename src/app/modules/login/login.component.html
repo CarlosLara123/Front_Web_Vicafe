@@ -1,1 +1,21 @@
-<p>login works!</p>
+<body>
+    <img src="../../../assets/fondo1.jpg" alt="fondo">
+    <div class="box">
+        <h2>Iniciar Sesión</h2>
+        <form #loginform='ngForm' (ngSubmit)='login();'>
+            <div class="inputBox">
+                <input type="text" name="nickname" #nickname="ngModel" [(ngModel)]="user.nickname"
+                    required="true" autofocus>
+                <label>Nombre Usuario</label>
+            </div>
+            <div class="inputBox">
+                <input type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
+                    required="true">
+                <label>Contraseña</label>
+            </div>
+            <div style="text-align: center;">
+                <input type="submit" value="Iniciar Sesión">
+            </div>
+        </form>
+    </div>
+</body>

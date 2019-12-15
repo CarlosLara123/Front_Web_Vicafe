@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.btn-primario{
+    background-color: #acbf00;
+}
+
+.btn-primario:active{
+    background-color: #acbf00;
+}

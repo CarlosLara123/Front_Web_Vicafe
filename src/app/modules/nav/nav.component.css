@@ -3,6 +3,7 @@ body {
   margin: 0px;
 }
 nav {
+  background-color: rgb(172, 191, 0);
   margin-top: 0px;
   /* padding: 24px; */
   font-family: Raleway;
@@ -13,12 +14,12 @@ nav {
 .link-1 {
   margin: 0 auto;
   transition: 0.3s ease;
-  background: #3fa46a;
+  background: rgb(172, 191, 0);
   color: #ffffff;
   font-size: 20px;
   text-decoration: none;
-  border-top: 4px solid #3fa46a;
-  border-bottom: 4px solid #3fa46a;
+  border-top: 4px solid rgb(172, 191, 0);
+  border-bottom: 4px solid rgb(172, 191, 0);
   padding: 10px 0;
   margin: 0 10px;
 }
@@ -26,4 +27,93 @@ nav {
   border-top: 4px solid #ffffff;
   border-bottom: 4px solid #ffffff;
   /* padding: 6px 0;  */
+}
+
+.login{
+  color: white;
+}
+
+.modal-content{
+  background-color: transparent;
+  border-color: transparent;
+  max-height: 200px;
+  margin-top: -250px;
+}
+
+/*RESPONSIVE*/
+@media only screen and (min-width: 400px) and (max-width: 470px) {
+  #modal-logo{
+    height: 200px;
+  }
+
+  #logo{
+    margin-left: 10%;
+    max-width: 350px;
+  }
+}
+
+@media only screen and (min-width: 471px) and (max-width: 550px) {
+  #modal-logo{
+    height: 400px;
+  }
+
+  #logo{
+    margin-left: 15%;
+    max-width: 350px;
+  }
+}
+
+@media only screen and (max-width: 399px) {
+  #modal-logo{
+    height: 250px;
+  }
+
+  #logo{
+    margin-left: 12%; 
+    max-width: 250px;
+  }
+}
+
+@media only screen and (min-width: 400px) and (max-width: 550px) {
+  #modal-logo{
+    height: 250px;
+  }
+
+  #logo{
+    margin-left: 18%; 
+    max-width: 250px;
+  }
+}
+
+@media only screen and (min-width: 551px) and (max-width: 615px) {
+  #modal-logo{
+    height: 400px;
+  }
+
+  #logo{
+    margin-left: 20%;
+    max-width: 350px;
+  }
+}
+
+@media only screen and (min-width: 616px) and (max-width: 675px) {
+  #modal-logo{
+    height: 500px;
+  }
+
+  #logo{
+    margin-left: 20%;
+    max-width: 400px;
+  }
+}
+
+@media only screen and (min-width: 676px) and (max-width: 700px) {
+  #modal-logo{
+    height: 550px;
+  }
+
+  #logo{
+    margin-left: 20%;
+    max-width: 450px;
+  }
 }

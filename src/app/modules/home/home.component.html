@@ -1,13 +1,13 @@
-<main role="main" id="myCarousel">
-  <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active" data-interval="1000">
+<main role="main" id="myCarousel" style="padding: 0;">
+  <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel" style="padding: 0;">
+    <div class="carousel-inner" style="padding: 0;">
+      <div class="carousel-item active" data-interval="1000" style="padding: 0;">
         <img src="../../../assets/home/carrousel/image_1.jpg" class="d-block w-100" alt="...">
       </div>
-      <div class="carousel-item" data-interval="2000">
+      <div class="carousel-item" data-interval="2000" style="padding: 0;">
         <img src="../../../assets/home/carrousel/image_2.jpg" class="d-block w-100" alt="...">
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item" style="padding: 0;">
         <img src="../../../assets/home/carrousel/image_3.jpg" class="d-block w-100" alt="...">
       </div>
     </div>
@@ -29,99 +29,473 @@
   <div class="container marketing">
 
     <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="container2">
+    <div class="row" style="margin: 0;">
+      <button class="btn btn-primary btn-lg float-right rounded-circle" data-target="#newFarmer" data-toggle="modal"
+        style="height: 50px; width: 50px; margin:0 5vh 3vh 0;position: relative;bottom:5px;right:5px;" data-placement="top" title="Agregar socio" *ngIf="logged">
+        <i class="fas fa-user-plus"></i>
+      </button>
+      <h1 class="titles">S O C I O S <br> P R O D U C T O R E S</h1>
+    </div>
+    <div class="row" *ngIf="!viewFarmer">
+      <h1>
+        <p style="text-align: center;">{{notFarmer}}</p>
+      </h1>
+    </div>
+    <div class="row" style="margin: 0 auto;" *ngIf="viewFarmer">
+      <div class="col-lg-4" *ngFor="let far of farmerlist">
+        <div class="container2" style="margin-top: 12px;">
           <div class="container">
             <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250"
               height="250" src="../../../assets/socio.png">
-            <h2>Socio o productor</h2>
-            <p>Algunos datos a grandes resgos sobre la persona, el boton abre una modal con toda la informacion</p>
+            <h2>{{far.name}}</h2>
+            <p>CALIDAD DE TASA: {{far.tasa}}</p>
+            <p>CONTACTO: (+502) {{far.contact}}</p>
           </div>
-          <p><button class="btn btn-secondary btn-block" (click)='info()' role="button">Mas información</button></p>
-        </div>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <div class="container2">
-          <div class="container">
-            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250"
-              height="250" src="../../../assets/socio.png">
-            <h2>Socio o productor</h2>
-            <p>Algunos datos a grandes resgos sobre la persona, el boton abre una modal con toda la informacion</p>
+          <div class="btn-group">
+            <button class="btn btn-warning" data-target="#updateFarmer" data-toggle="modal" *ngIf="logged"
+              (click)="getOneFarmer(far._id)">
+              <span>Editar <i class="fas fa-user-edit"></i></span>
+            </button>
+            <button class="btn btn-danger" data-target="#deleteFarmer" data-toggle="modal" *ngIf="logged"
+              (click)="getOneFarmer(far._id)">
+              <span>Eliminar <i class="fas fa-user-minus"></i></span>
+            </button>
           </div>
-          <p><button class="btn btn-secondary btn-block" (click)='info()' role="button">Mas información</button></p>
+          <p><button class="btn btn-secondary btn-block more" data-target="#info" data-toggle="modal" 
+              role="button" (click)="getOneFarmer(far._id)">
+            Mas información</button></p>
         </div>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <div class="container2">
-          <div class="container">
-            <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250"
-              height="250" src="../../../assets/socio.png">
-            <h2>Socio o productor</h2>
-            <p>Algunos datos a grandes resgos sobre la persona, el boton abre una modal con toda la informacion</p>
-          </div>
-          <p><button class="btn btn-secondary btn-block" (click)='info()' role="button">Mas información</button></p>
-        </div>
-      </div><!-- /.col-lg-4 -->
     </div><!-- /.row SOCIOS -->
-
-
+    <br>
+    <hr class="featurette-divider">
+  </div>
     <!-- SECCION DE EVENTOS Y PUBLICACIONES -->
 
-    <h1 style="padding: 5px; text-align: center; font-size: 48px;">E V E N T O S</h1>
+    <h1 class="titles">E V E N T O S</h1>
 
     <hr class="featurette-divider">
 
-    <div class="row featurette">
+    <div class="row" *ngIf="!viewPost">
+      <h1>
+        <p style="text-align: center;">{{notPost}}</p>
+      </h1>
+    </div>
+    <div class="row featurette" *ngFor="let pbl of publicationlist" style="margin-top: 45px;">
       <div class="col-md-7">
-        <h2 class="featurette-heading">Titulo de publicación</h2>
-        <p class="lead">Aquí se va a redacta una descripcion de la publicación, donde se de a entender de que se trata y
-          otros datos</p>
+        <h2 class="featurette-heading">{{pbl.title}}</h2>
+        <p class="lead" style="word-wrap: break-word;">{{pbl.text}}</p>
+        <div class="footer">
+          <span data-target="#updatePost" data-toggle="modal" *ngIf="logged"
+            (click)="getOnePost(pbl._id)"><i class="fas fa-edit"></i></span>
+          <span data-target="#deletePost" data-toggle="modal" *ngIf="logged" style="margin-left: 12px;"
+            (click)="getOnePost(pbl._id)"><i class="fas fa-trash-alt"></i></span>
+        </div>
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5 img-post">
         <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-          height="500" src="../../../assets/publ.png">
+          height="500" src="../../../assets/publ.png" *ngIf="!pbl.image">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
+          height="500" src="{{url + '/get-image-publication/' + pbl.image}}" *ngIf="pbl.image">
       </div>
+      <hr class="featurette-divider">
     </div>
 
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading">Titulo de publicación</h2>
-        <p class="lead">Aquí se va a redacta una descripcion de la publicación, donde se de a entender de que se trata y
-          otros datos</p>
-      </div>
-      <div class="col-md-5 order-md-1">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-          height="500" src="../../../assets/publ.png">
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <div class="row featurette">
-      <div class="col-md-7">
-        <h2 class="featurette-heading">Titulo de publicación</h2>
-        <p class="lead">Aquí se va a redacta una descripcion de la publicación, donde se de a entender de que se trata y
-          otros datos</p>
-      </div>
-      <div class="col-md-5">
-        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500"
-          height="500" src="../../../assets/publ.png">
-      </div>
-    </div>
-
-    <hr class="featurette-divider">
-
-    <!-- /FIN DE PUBLICACIONES Y EVENTOS -->
   </div><!-- /.container -->
-  <button class="btn btn-primary btn-lg float-right rounded-circle" (click)="newPost()"
-      style="height: 70px; width: 70px; margin:0 5vh 3vh 0;position: fixed;bottom:5px;right:5px"><i
-        class="fas fa-plus"></i></button>
-  <!--
-        MODALS Y DE MAS
-      -->
-
+  <button class="btn btn-primary btn-lg float-right rounded-circle newPost" data-target="#newPost" data-toggle="modal"
+    data-placement="top" title="Agregar publicación" *ngIf="logged">
+    <i class="fas fa-plus"></i>
+  </button>
 
 </main>
+
+<!-------------------------------------------------
+----------------  MODALS Y DE MAS  ----------------
+--------------------------------------------------->
+
+<!-- MODAL NEW PROVIDERS -->
+<div class="modal fade" id="newFarmer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">CREAR SOCIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="contact100-form validate-form">
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-user"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Nombre completo"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="name" #name="ngModel" [(ngModel)]="farmer.name">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-mug-hot"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Tasa"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="tasa" #tasa="ngModel" [(ngModel)]="farmer.tasa">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><img
+                  src="https://img.icons8.com/ios-filled/50/000000/coffee-beans---v1.png" width="20" heigth="20"></span>
+            </div>
+            <textarea type="text" class="form-control" aria-label="-" placeholder="Variedades de cafe"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="coffes" #coffes="ngModel" [(ngModel)]="farmer.coffes"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-map-marked-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Ubicacion"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="address" #address="ngModel" [(ngModel)]="farmer.address">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-mobile-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Contacto"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="contact" #contact="ngModel" [(ngModel)]="farmer.contact">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Cancelar<span style="margin-left: 12px;"><i class="fas fa-user-minus"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="newFarmer()">
+          Crear<span style="margin-left: 12px;"><i class="fas fa-user-plus"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INFO PROVIDERS -->
+<div class="modal fade" id="info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">INFORMARCIÓN DE SOCIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="contact100-form validate-form">
+              <div class="input-group mb-3" style="margin-top: 5px">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                      class="fas fa-user"></i></span>
+                </div>
+                <input type="text" class="form-control" aria-label="-" placeholder="Nombre completo"
+                  style="border: none; border-bottom: 2px solid #3fa46a" name="name" #name="ngModel" [(ngModel)]="farmerSelected.name">
+              </div>
+              <div class="input-group mb-3" style="margin-top: 5px">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                      class="fas fa-mug-hot"></i></span>
+                </div>
+                <input type="text" class="form-control" aria-label="-" placeholder="Tasa"
+                  style="border: none; border-bottom: 2px solid #3fa46a" name="tasa" #tasa="ngModel" [(ngModel)]="farmerSelected.tasa">
+              </div>
+              <div class="input-group mb-3" style="margin-top: 5px">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                      class="fas fa-water"></i></span>
+                  </div>
+                  <input type="text" class="form-control" aria-label="-" placeholder="Distancia sobre el nivel del mar"
+                    style="border: none; border-bottom: 2px solid #3fa46a">
+                </div>
+              <div class="input-group mb-3" style="margin-top: 5px">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><img
+                      src="https://img.icons8.com/ios-filled/50/000000/coffee-beans---v1.png" width="20" heigth="20"></span>
+                </div>
+                <textarea type="text" class="form-control" aria-label="-" placeholder="Variedades de cafe"
+                  style="border: none; border-bottom: 2px solid #3fa46a" name="coffes" #coffes="ngModel" [(ngModel)]="farmerSelected.coffes"></textarea>
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                      class="fas fa-map-marked-alt"></i></span>
+                </div>
+                <input type="text" class="form-control" aria-label="-" placeholder="Ubicacion"
+                  style="border: none; border-bottom: 2px solid #3fa46a" name="address" #address="ngModel" [(ngModel)]="farmerSelected.address">
+              </div>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                      class="fas fa-mobile-alt"></i></span>
+                </div>
+                <input type="text" class="form-control" aria-label="-" placeholder="Contacto"
+                  style="border: none; border-bottom: 2px solid #3fa46a" name="contact" #contact="ngModel" [(ngModel)]="farmerSelected.contact">
+              </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL UPDATE PROVIDERS -->
+<div class="modal fade" id="updateFarmer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">EDITAR INFORMARCIÓN DE SOCIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="contact100-form validate-form">
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-user"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Nombre completo"
+              style="border: none; border-bottom: 2px solid #3fa46a">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-mug-hot"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Tasa"
+              style="border: none; border-bottom: 2px solid #3fa46a">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><img
+                  src="https://img.icons8.com/ios-filled/50/000000/coffee-beans---v1.png" width="20" heigth="20"></span>
+            </div>
+            <textarea type="text" class="form-control" aria-label="-" placeholder="Variedades de cafe"
+              style="border: none; border-bottom: 2px solid #3fa46a"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-map-marked-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Ubicacion"
+              style="border: none; border-bottom: 2px solid #3fa46a">
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-mobile-alt"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Contacto"
+              style="border: none; border-bottom: 2px solid #3fa46a">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">
+          <span>Editar <i class="fas fa-user-edit" style="margin-left: 12px;"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE PROVIDER -->
+<div class="modal fade" id="deleteFarmer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">ELIMIAR SOCIO</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h1>¿Estás seguro de eliminar al socio?</h1>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteOneFarmer(farmerSelected._id)">
+          <span>Elimiar <i class="fas fa-user-minus" style="margin-left: 12px;"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NEW POST -->
+<div class="modal fade" id="newPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">CREAR PUBLICACIÓN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="col-12">
+          <ul class="nav nav-tabs flex-nowrap" role="tablist">
+            <li role="presentation" class="nav-item">
+              <a href="#step1" class="nav-link active" data-toggle="tab" aria-controls="step1" role="tab"
+                title="Step 1"> 1 </a>
+            </li>
+            <li role="presentation" class="nav-item">
+              <a href="#step2" class="nav-link disabled" data-toggle="tab" aria-controls="step2" role="tab"
+                title="Step 2"> 2 </a>
+            </li>
+          </ul>
+          <form role="form">
+            <div class="tab-content py-2">
+              <div class="tab-pane active" role="tabpanel" id="step1">
+                <form #addPost="ngForm">
+                  <div class="input-group mb-3" style="margin-top: 5px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text inp-publication"><i class="fas fa-font"></i></span>
+                    </div>
+                    <input type="text" class="form-control inp-publication" aria-label="-"
+                      placeholder="Agrega un titulo" name="title" #title="ngModel" [(ngModel)]="publication.title">
+                  </div>
+                  <div class="input-group mb-3" style="margin-top: 5px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text inp-publication"><i class="fas fa-file-word"></i></span>
+                    </div>
+                    <textarea type="text" class="form-control inp-publication" aria-label="-"
+                      placeholder="Agrega una descripción" name="text" #text="ngModel"
+                      [(ngModel)]="publication.text"></textarea>
+                  </div>
+                </form>
+                <hr>
+                <button type="button" class="btn btn-primary next-step float-right" (click)="newPost()">Next</button>
+              </div>
+              <div class="tab-pane" role="tabpanel" id="step2">
+                <form>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text inp-publication"><i class="far fa-image"></i></span>
+                    </div>
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input inp-publication" id="inputGroupFile01"
+                        (change)="fileChangeEvent($event)">
+                      <label class="custom-file-label inp-publication" for="inputGroupFile01">Choose file</label>
+                    </div>
+                  </div>
+                </form>
+                <hr>
+                <ul class="float-right">
+                  <li class="list-inline-item">
+                    <button type="button" class="btn btn-outline-primary prev-step">Previous</button>
+                  </li>
+                  <li class="list-inline-item">
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setImage(publication._id)">
+                          <span>Publicar <i class="fas fa-check" style="margin-left: 12px;"></i></span>
+                      </button>
+                  </li>
+                </ul>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL UPDATE POST -->
+<div class="modal fade" id="updatePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">EDITAR PUBLICACIÓN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text inp-publication"><i class="fas fa-font"></i></span>
+            </div>
+            <input type="text" class="form-control inp-publication" aria-label="-" placeholder="Agrega un titulo"
+              name="title" #title="ngModel" [(ngModel)]="publicationSelected.title">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text inp-publication"><i class="fas fa-file-word"></i></span>
+            </div>
+            <textarea type="text" class="form-control inp-publication" aria-label="-" placeholder="Agrega una descripción" 
+            name="text" #text="ngModel" [(ngModel)]="publicationSelected.text"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text inp-publication"><i class="far fa-image"></i></span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input inp-publication" id="inputGroupFile01"
+                (change)="fileChangeEvent($event)">
+              <label class="custom-file-label inp-publication" for="inputGroupFile01">Choose file</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateOnePost(publicationSelected._id)">
+          <span>Editar <i class="fas fa-user-minus"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DELETE POST -->
+<div class="modal fade" id="deletePost" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">ELIMIAR PUBLICACIÓN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Estás seguro de eliminar la puclicación?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+          (click)="deleteOnePost(publicationSelected._id)">
+          <span>Elimiar <i class="fas fa-trash-alt" style="margin-left: 12px;"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
