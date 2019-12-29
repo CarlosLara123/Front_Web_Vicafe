@@ -96,13 +96,20 @@ export class HomeComponent implements OnInit {
 
   }
 
+public functionModalPost(){
+
+}
+
+public functionModalFarmer(){
+  
+}
   public getAllPost() {
     this._publicationService.getAllPost().subscribe(
       response => {
         this.publicationlist = response.Publications;
-        if (this.publicationlist.length == 0) {
-          this.viewPost = false;
-        }
+        // if (this.publicationlist.length == 0) {
+        //   this.viewPost = false;
+        // }
         console.log(this.publicationlist)
       },
       error => {
@@ -145,14 +152,15 @@ export class HomeComponent implements OnInit {
       response => {
         this.publication = response.newPublication;
         console.log(this.publication);
-        // this.getAllPost();
       },
       error => {
         var errorMessage = <any>error;
         console.log(errorMessage);
+        console.log(this.publication)
+        console.log(this.publicationlist)
         if (errorMessage != null) {
           Toast.fire({
-            text: error.error.message,
+            text: error.message,
             type: 'error'
           })
         }
@@ -247,6 +255,7 @@ export class HomeComponent implements OnInit {
         text: response.message,
         type: 'success'
       })
+      this.getAllFarmer()
      },
      error =>{
       var errorMessage = <any>error;
@@ -273,10 +282,10 @@ export class HomeComponent implements OnInit {
             
           })
         }else{
-          if(this.subirImege == true){
+          if(this.subirImege){
             sessionStorage.setItem('identity', JSON.stringify(this.publicationSelected.toString()));
             this.identity = this.publicationSelected;
-            //SUBIR LA IMAGEN 
+            //SUBIR LA IMAGEN
             this._uploadService.makeFileRequest(this.url+'/upload-image-publication/'+id, [],this.filesToUpload, this.token, 'image')
             .then((result: any)=>{
               console.log(result);
@@ -294,7 +303,7 @@ export class HomeComponent implements OnInit {
 
           }          
         }
-
+        this.getAllPost()
       },
       error => {        
         var errorMessage = <any>error;
@@ -310,13 +319,14 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  public setImage(id) {
+  public setImagePost(id) {
     this._publicationService.updatePost(id, this.publication).subscribe(
       response => {
         if(!response.publication){
           console.log('No traigo nada')
         }else{
           if (this.subirImege == true) {
+            console.log(response.publication.image)
             this._uploadService.makeFileRequest(this.url + '/upload-image-publication/' + id, [], this.filesToUpload, this.token, 'image')
               .then((result: any) => {
                 this.publication.image = result.publication.image;
@@ -352,6 +362,54 @@ export class HomeComponent implements OnInit {
             type: 'error'
           })
           this.deleteOnePost(this.publication._id)
+        }
+      }
+    )
+  }
+
+  public setImageFarmer(id) {
+    this._farmerService.updatefarmer(id, this.farmer).subscribe(
+      response => {
+        if(!response.farmer){
+          console.log('No traigo nada')
+        }else{
+          if (this.subirImege == true) {
+            console.log(response.farmer.image)
+            this._uploadService.makeFileRequest(this.url + '/upload-image-farmer/' + id, [], this.filesToUpload, this.token, 'image')
+              .then((result: any) => {
+                this.farmer.image = result.farmer.image;
+                this.getAllPost();
+                if (result.farmer) {
+                  Toast.fire({
+                    text: 'Socio creado exitosamente',
+                    type: 'success'
+                  })
+                } else {
+                  Toast.fire({
+                    text: 'No se pudo crear al socio',
+                    type: 'error'
+                  })
+                  this.deleteOneFarmer(this.farmer._id)
+                }
+              });
+          } else {
+            Toast.fire({
+              text: 'No se pudo crear al socio',
+              type: 'error'
+            })
+            this.deleteOneFarmer(this.farmer._id)
+          }
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          Toast.fire({
+            text: 'No se pudo crear al socio',
+            type: 'error'
+          })
+          this.deleteOneFarmer(this.farmer._id)
         }
       }
     )

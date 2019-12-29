@@ -1,85 +1,55 @@
-<section id=timeline>
-	<h1>Linea del tiempo</h1>
-	<p class="leader">En esta linea del tiempo se va a redactar la historia de la cooperativa</p>
+<header class="parallax">
+  <div class="container text-center">
+    <h1 style="font-family: 'Kaushan Script', cursive;">Linea del Tiempo</h1>
+    <p>Cooperativa ViCafé</p>
+  </div>
+</header>
+
+<section class="timeline">
+  <div class="container">
+    <div class="timeline-item" *ngFor="let hst of historyList">
+
+      <div class="timeline-img">{{hst.image}}</div>
+
+      <div class="timeline-content timeline-card js--fadeInLeft">
+        <div class="timeline-img-header">
+          <h2>{{hst.title}}</h2>
+        </div>
+        <div class="date">{{hst.year}}</div>
+        <div>
+        <span data-target="#updateHistory" data-toggle="modal" *ngIf="logged" style="margin-left: 12px;"
+            (click)="getOneHistory(hst._id)"><i class="fas fa-edit"></i></span>
+          <span data-target="#deleteHistory" data-toggle="modal" *ngIf="logged" style="margin-left: 12px;"
+            (click)="getOneHistory(hst._id)"><i class="fas fa-trash-alt"></i></span>
+        </div>
+        <p style="word-wrap: break-word;">
+          {{hst.text}}
+        </p>
+      </div>
+
+    </div>
     
-    <div class="demo-card-wrapper">
-
-		<div class="demo-card demo-card--step1" *ngFor="let hst of historyList">
-			<div class="head">
-				<div class="number-box">
-					<span>{{hst.year}}</span>
-				</div>
-				<h2><span class="small">{{hst.title}}</span></h2>
-			</div>
-			<div class="body">
-				<p style="word-wrap: break-word;">{{hst.text}}</p>
-				<img src="http://placehold.it/1000x500" alt="Graphic">
-			</div>
-		</div>
-
-		<div class="demo-card demo-card--step2">
-		</div>
-
-		<div class="demo-card demo-card--step3">
-			<div class="head">
-				<div class="number-box">
-					<span>03</span>
-				</div>
-				<h2><span class="small">Subtitle</span> Adaptation</h2>
-			</div>
-			<div class="body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta reiciendis deserunt doloribus consequatur, laudantium odio dolorum laboriosam.</p>
-				<img src="http://placehold.it/1000x500" alt="Graphic">
-			</div>
-		</div>
-
-		<div class="demo-card demo-card--step4">
-			<div class="head">
-				<div class="number-box">
-					<span>04</span>
-				</div>
-				<h2><span class="small">Subtitle</span> Consistency</h2>
-			</div>
-			<div class="body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta reiciendis deserunt doloribus consequatur, laudantium odio dolorum laboriosam.</p>
-				<img src="http://placehold.it/1000x500" alt="Graphic">
-			</div>
-		</div>
-
-		<div class="demo-card demo-card--step5">
-			<div class="head">
-				<div class="number-box">
-					<span>05</span>
-				</div>
-				<h2><span class="small">Subtitle</span> Conversion</h2>
-			</div>
-			<div class="body">
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta reiciendis deserunt doloribus consequatur, laudantium odio dolorum laboriosam.</p>
-				<img src="http://placehold.it/1000x500" alt="Graphic">
-			</div>
-		</div>
-    
-	</div>
-	<button class="btn btn-primary btn-lg float-right rounded-circle newPost" data-target="#newHistory" data-toggle="modal"
-		data-placement="top" title="Agregar historia" *ngIf="!logged">
-		<i class="fas fa-plus"></i>
-	</button>
+    <button class="btn btn-primary btn-lg float-right rounded-circle style-btn" data-target="#addHistory" data-toggle="modal"
+      data-placement="top" title="Agregar Historia" *ngIf="logged">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
 </section>
-
-
-<!-- NEW HISTORY MODAL -->
-<div class="modal fade" id="newHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<!--------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------->
+<!--NEW HISTORY -->
+<div class="modal fade" id="addHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">AGREGAR HISTORIA</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">CREAR SOCIO</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <section class="col-12">
+        <section class="col-12" style="padding: 0px;">
           <ul class="nav nav-tabs flex-nowrap" role="tablist">
             <li role="presentation" class="nav-item">
               <a href="#step1" class="nav-link active" data-toggle="tab" aria-controls="step1" role="tab"
@@ -93,32 +63,36 @@
           <form role="form">
             <div class="tab-content py-2">
               <div class="tab-pane active" role="tabpanel" id="step1">
-                <form #addHistory="ngForm">
+                <form #addFarmer="ngForm" class="contact100-form validate-form">
                   <div class="input-group mb-3" style="margin-top: 5px">
                     <div class="input-group-prepend">
-                      <span class="input-group-text inp-publication"><i class="fas fa-font"></i></span>
+                      <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                          class="fas fa-user"></i></span>
                     </div>
-                    <input type="text" class="form-control inp-publication" aria-label="-"
-                      placeholder="Agrega un año" name="title" #title="ngModel" [(ngModel)]="history.title">
+                    <input type="text" class="form-control" aria-label="-" placeholder="Año"
+                      style="border: none; border-bottom: 2px solid #3fa46a" name="year" #year="ngModel" [(ngModel)]="history.year">
                   </div>
                   <div class="input-group mb-3" style="margin-top: 5px">
                     <div class="input-group-prepend">
-                      <span class="input-group-text inp-publication"><i class="fas fa-font"></i></span>
+                      <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                          class="fas fa-mug-hot"></i></span>
                     </div>
-                    <input type="text" class="form-control inp-publication" aria-label="-"
-                      placeholder="Agrega un año" name="year" #year="ngModel" [(ngModel)]="history.year">
+                    <input type="text" class="form-control" aria-label="-" placeholder="Titulo"
+                      style="border: none; border-bottom: 2px solid #3fa46a" name="title" #title="ngModel" [(ngModel)]="history.title">
                   </div>
                   <div class="input-group mb-3" style="margin-top: 5px">
                     <div class="input-group-prepend">
-                      <span class="input-group-text inp-publication"><i class="fas fa-file-word"></i></span>
+                      <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><img
+                          src="https://img.icons8.com/ios-filled/50/000000/coffee-beans---v1.png" width="20" heigth="20"></span>
                     </div>
-                    <textarea type="text" class="form-control inp-publication" aria-label="-"
-                      placeholder="Agrega una descripción" name="text" #text="ngModel"
-                      [(ngModel)]="history.text"></textarea>
+                    <textarea type="text" class="form-control" aria-label="-" placeholder="Descripción"
+                      style="border: none; border-bottom: 2px solid #3fa46a" name="text" #text="ngModel" [(ngModel)]="history.text"></textarea>
                   </div>
-				  <hr>
-				  <button type="button" class="btn btn-primary next-step float-right" (click)="newHistory()">Next</button>
                 </form>
+                <hr>
+                <button type="button" class="btn btn-primary next-step float-right" (click)="newHistory()">
+                  Siguiente<span style="margin-left: 12px;"><i class="fas fa-user-plus"></i></span>
+                </button>
               </div>
               <div class="tab-pane" role="tabpanel" id="step2">
                 <form>
@@ -127,20 +101,20 @@
                       <span class="input-group-text inp-publication"><i class="far fa-image"></i></span>
                     </div>
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input inp-publication" id="inputGroupFile01"
+                      <input type="file" class="custom-file-input inp-publication" id="inputGroupFile00"
                         (change)="fileChangeEvent($event)">
-                      <label class="custom-file-label inp-publication" for="inputGroupFile01">Choose file</label>
+                      <label class="custom-file-label inp-publication" for="inputGroupFile00">Choose file</label>
                     </div>
                   </div>
                 </form>
                 <hr>
-                <ul class="float-right">
+                <ul class="float-atrasht">
                   <li class="list-inline-item">
-                    <button type="button" class="btn btn-outline-primary prev-step">Atras</button>
+                    <button type="button" class="btn btn-outline-primary prev-step">atras</button>
                   </li>
                   <li class="list-inline-item">
-                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setImage(publication._id)">
-                          <span>Agregar <i class="fas fa-check" style="margin-left: 12px;"></i></span>
+                      <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="setImageHistory(history._id)">
+                        Crear<span style="margin-left: 12px;"><i class="fas fa-user-plus"></i></span>
                       </button>
                   </li>
                 </ul>
@@ -149,6 +123,94 @@
             </div>
           </form>
         </section>
+      </div>      
+    </div>
+  </div>
+</div>
+
+<!-- MODAL UPDATE HISTORY -->
+<!-- <div class="modal fade" id="updateHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">EDITAR PUBLICACIÓN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-user"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Año"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="year" #year="ngModel" [(ngModel)]="historySelected.year">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><i
+                  class="fas fa-mug-hot"></i></span>
+            </div>
+            <input type="text" class="form-control" aria-label="-" placeholder="Titulo"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="title" #title="ngModel" [(ngModel)]="historySelected.title">
+          </div>
+          <div class="input-group mb-3" style="margin-top: 5px">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="border: none; border-bottom: 2px solid #3fa46a"><img
+                  src="https://img.icons8.com/ios-filled/50/000000/coffee-beans---v1.png" width="20" heigth="20"></span>
+            </div>
+            <textarea type="text" class="form-control" aria-label="-" placeholder="Descripción"
+              style="border: none; border-bottom: 2px solid #3fa46a" name="text" #text="ngModel" [(ngModel)]="historySelected.text"></textarea>
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text inp-publication"><i class="far fa-image"></i></span>
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input inp-publication" id="inputGroupFile02"
+                (change)="fileChangeEvent($event)">
+              <label class="custom-file-label inp-publication" for="inputGroupFile02">Choose file</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateOneHistory(historySelected._id)">
+          <span>Editar <i class="fas fa-user-minus"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- MODAL DELETE HISTORY -->
+<div class="modal fade" id="deleteHistory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">ELIMIAR Historia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>¿Estás seguro de eliminar esta parte de la historia?</h2>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          <span>Cancelar <i class="fas fa-times" style="margin-left: 12px;"></i></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal"
+          (click)="deleteOneHistory(historySelected._id)">
+          <span>Elimiar <i class="fas fa-trash-alt" style="margin-left: 12px;"></i></span>
+        </button>
       </div>
     </div>
   </div>

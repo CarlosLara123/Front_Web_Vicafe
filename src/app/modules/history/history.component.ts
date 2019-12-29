@@ -13,6 +13,7 @@ const Toast = Swal.mixin({
   timer: 3000
 })
 
+declare var $: any;
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -48,11 +49,35 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit() {
     this.getAllHistories()
-    if(this.historyList){
-      for (let i = 0; i < this.historyList.length; i++) {
-        this.color = Math.floor(Math.random()*16777215).toString(16)
-        console.log(this.color)
-      }
+    if(this.token){
+      this.logged = true;
+    }
+    $(document).ready(function () {
+      //Wizard
+      $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+        var $target = $(e.target);
+        if ($target.parent().hasClass('disabled')) {
+          return false;
+        }
+      });
+
+      $(".next-step").click(function (e) {
+        var $active = $('.nav-tabs li>.active');
+        $active.parent().next().find('.nav-link').removeClass('disabled');
+        nextTab($active);
+      });
+
+      $(".prev-step").click(function (e) {
+        var $active = $('.nav-tabs li>a.active');
+        prevTab($active);
+      });
+    });
+
+    function nextTab(elem) {
+      $(elem).parent().next().find('a[data-toggle="tab"]').click();
+    }
+    function prevTab(elem) {
+      $(elem).parent().prev().find('a[data-toggle="tab"]').click();
     }
   }
 
@@ -99,5 +124,80 @@ export class HistoryComponent implements OnInit {
     )
   }
 
+  public getOneHistory(id){
+    this._historyService.getOneHistory(this.token,id).subscribe(
+      response => {
+        if(response.result){
+          this.historySelected = response.result;
+          console.log(this.historySelected)
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          Toast.fire({
+            text: error.message,
+            type: 'error'
+          })
+        }
+      }
+    )
+  }
+
+  public deleteOneHistory(id){
+    this._historyService.deleteOneHistory(this.token,id).subscribe(
+      response => {
+        if(response.result){
+          Toast.fire({
+            text: response.message,
+            type: 'success'
+          })
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          Toast.fire({
+            text: error.message,
+            type: 'error'
+          })
+        }
+      }
+    )
+  }
+
+  public setImageHistory(id) {
+    if (this.subirImege == true) {
+      this._uploadService.makeFileRequest(this.url + '/upload-image-history/' + id, [], this.filesToUpload, this.token, 'image')
+        .then((result: any) => {
+          this.history.image = result.result.image;
+          if (result.result) {
+            Toast.fire({
+              text: 'Socio creado exitosamente',
+              type: 'success'
+            })
+          } else {
+            Toast.fire({
+              text: 'No se pudo crear al socio',
+              type: 'error'
+            })
+          }
+        });
+    } else {
+      Toast.fire({
+        text: 'No se pudo crear al socio',
+        type: 'error'
+      })
+    }
+  }
+
+  public filesToUpload: Array<File>;
+  public subirImege = false;
+  fileChangeEvent(fileInput: any) {
+    this.subirImege = true;
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
 
 }
