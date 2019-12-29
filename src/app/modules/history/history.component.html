@@ -9,9 +9,11 @@
   <div class="container">
     <div class="timeline-item" *ngFor="let hst of historyList">
 
-      <div class="timeline-img">{{hst.image}}</div>
+      <div class="timeline-img"></div>
 
       <div class="timeline-content timeline-card js--fadeInLeft">
+        <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="250"
+            height="250" src="{{url + '/get-image-history/' + hst.image}}" *ngIf="hst.image">
         <div class="timeline-img-header">
           <h2>{{hst.title}}</h2>
         </div>

@@ -169,28 +169,42 @@ export class HistoryComponent implements OnInit {
   }
 
   public setImageHistory(id) {
-    if (this.subirImege == true) {
-      this._uploadService.makeFileRequest(this.url + '/upload-image-history/' + id, [], this.filesToUpload, this.token, 'image')
-        .then((result: any) => {
-          this.history.image = result.result.image;
-          if (result.result) {
-            Toast.fire({
-              text: 'Socio creado exitosamente',
-              type: 'success'
-            })
-          } else {
-            Toast.fire({
-              text: 'No se pudo crear al socio',
-              type: 'error'
-            })
-          }
-        });
-    } else {
-      Toast.fire({
-        text: 'No se pudo crear al socio',
-        type: 'error'
-      })
-    }
+    this._historyService.updateOneHistory(id, this.history).subscribe(
+      response => {
+        if (this.subirImege == true) {
+          this._uploadService.makeFileRequest(this.url + '/upload-image-history/' + id, [], this.filesToUpload, this.token, 'image')
+            .then((result: any) => {
+              this.history.image = result.result.image;
+              if (result.result) {
+                Toast.fire({
+                  text: 'Historia generada exitosamente',
+                  type: 'success'
+                })
+              } else {
+                Toast.fire({
+                  text: 'No se pudo generar la historia',
+                  type: 'error'
+                })
+              }
+            });
+        } else {
+          Toast.fire({
+            text: 'Historia generada exitosamente',
+            type: 'success'
+          })
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          Toast.fire({
+            text: error.message,
+            type: 'error'
+          })
+        }
+      }
+    )
   }
 
   public filesToUpload: Array<File>;

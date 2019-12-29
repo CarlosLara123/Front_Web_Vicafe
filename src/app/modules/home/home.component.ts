@@ -326,7 +326,7 @@ public functionModalFarmer(){
           console.log('No traigo nada')
         }else{
           if (this.subirImege == true) {
-            console.log(response.publication.image)
+            console.log(this.filesToUpload, 'input image')
             this._uploadService.makeFileRequest(this.url + '/upload-image-publication/' + id, [], this.filesToUpload, this.token, 'image')
               .then((result: any) => {
                 this.publication.image = result.publication.image;
