@@ -33,6 +33,9 @@ export class LoginComponent implements OnInit {
         }else{
           sessionStorage.setItem('token', this.token);
           this._router.navigate(['/']);
+          setTimeout(() => {
+            window.location.reload()
+          }, 500);
         }
       },
       error=>{
@@ -58,9 +61,6 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('identity',JSON.stringify(this.identity));
           this.getToken();
           this.status = 'OK'
-          setTimeout(() => {
-            window.location.reload()
-          }, 500);
         }
       },
       error=>{

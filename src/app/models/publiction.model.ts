@@ -3,6 +3,7 @@ export class Publication{
         public _id : String,
         public title : String,
         public text : String,
-        public image : String
+        public image : String,
+        public url : String
     ){}
 }

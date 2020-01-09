@@ -45,8 +45,8 @@ export class HomeComponent implements OnInit {
     private _farmerService: FarmerService, 
     private _userService: UserService, 
     private _uploadService: UploadService) {
-      this.publication = new Publication('', '', '', '');
-      this.publicationSelected = new Publication('', '', '', '');
+      this.publication = new Publication('', '', '', '', '');
+      this.publicationSelected = new Publication('', '', '', '', '');
       this.farmer = new Farmer('','', '', '', '','','');
       this.farmerSelected = new Farmer('','', '', '', '','','');
       this.identity = this._userService.getIdentity();
@@ -157,7 +157,6 @@ public functionModalFarmer(){
         var errorMessage = <any>error;
         console.log(errorMessage);
         console.log(this.publication)
-        console.log(this.publicationlist)
         if (errorMessage != null) {
           Toast.fire({
             text: error.message,
@@ -180,7 +179,7 @@ public functionModalFarmer(){
         console.log(errorMessage);
         if (errorMessage != null) {
           Toast.fire({
-            text: error.error.message,
+            text: error.message,
             type: 'error'
           })
         }
@@ -329,6 +328,7 @@ public functionModalFarmer(){
             console.log(this.filesToUpload, 'input image')
             this._uploadService.makeFileRequest(this.url + '/upload-image-publication/' + id, [], this.filesToUpload, this.token, 'image')
               .then((result: any) => {
+                console.log('estoy dentro de la promesa', result.publication.image)
                 this.publication.image = result.publication.image;
                 this.getAllPost();
                 if (result.publication) {
@@ -343,7 +343,7 @@ public functionModalFarmer(){
                   })
                   this.deleteOnePost(this.publication._id)
                 }
-              });
+              }).catch(err => console.log(err));
           } else {
             Toast.fire({
               text: 'No se pudo crear la publicón',
