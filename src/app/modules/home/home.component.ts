@@ -325,11 +325,16 @@ public functionModalFarmer(){
           console.log('No traigo nada')
         }else{
           if (this.subirImege == true) {
-            console.log(this.filesToUpload, 'input image')
+            // console.log(this.url, 'input image')
+            // console.log(id, 'input image')
+            // console.log(this.filesToUpload, 'input image')
+            // console.log(this.token, 'input image')
             this._uploadService.makeFileRequest(this.url + '/upload-image-publication/' + id, [], this.filesToUpload, this.token, 'image')
               .then((result: any) => {
+                console.log(result)
                 console.log('estoy dentro de la promesa', result.publication.image)
                 this.publication.image = result.publication.image;
+                this.publication.url = result.publication.url;
                 this.getAllPost();
                 if (result.publication) {
                   Toast.fire({
@@ -344,7 +349,8 @@ public functionModalFarmer(){
                   this.deleteOnePost(this.publication._id)
                 }
               }).catch(err => console.log(err));
-          } else {
+
+            } else {
             Toast.fire({
               text: 'No se pudo crear la publicón',
               type: 'error'

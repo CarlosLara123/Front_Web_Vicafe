@@ -5,7 +5,7 @@ export class Farmer{
         public tasa : String,
         public coffes : String,
         public address : String,
-        public contact : String,
-        public image : String
+        public image : String,
+        public url : String
     ){}
 }

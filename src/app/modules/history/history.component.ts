@@ -38,7 +38,7 @@ export class HistoryComponent implements OnInit {
     private _uploadService: UploadService
   ) {
     this.color = this.color;
-    this.history = new History('','','','','');
+    this.history = new History('','','','','','');
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url;

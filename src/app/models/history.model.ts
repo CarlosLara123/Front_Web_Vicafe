@@ -4,6 +4,7 @@ export class History {
         public title : String,
         public year : String,
         public text : String,
-        public image : String
+        public image : String,
+        public url : String
     ){}
 }

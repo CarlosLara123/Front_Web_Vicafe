@@ -1,0 +1,7 @@
+{
+    "/api/*": {
+        "target": "https://covicafe-web.herokuapp.com",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

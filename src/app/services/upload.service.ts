@@ -22,10 +22,13 @@ export class UploadService {
 
       xhr.onreadystatechange = function(){
         if(xhr.readyState == 4){
+          console.log(xhr.response , "--antes del 200")
           if(xhr.status == 200){
+            console.log(xhr.response)
             resolve(JSON.parse(xhr.response));
           }else{
             reject(xhr.response);
+            console.log(xhr.response)
           }
         }
       }
