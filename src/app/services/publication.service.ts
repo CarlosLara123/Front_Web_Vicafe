@@ -25,7 +25,7 @@ export class PublicationService {
 
   public getAllPost(page = null) : Observable<any>{
     let headers = new HttpHeaders().set('Content-type', 'application/json');
-    return this._http.get( this.url + '/publication/all', {headers : headers} );
+    return this._http.get(this.url + '/publication/all', {headers : headers} );
   }
 
   public getOnePost(token, id) : Observable<any>{
